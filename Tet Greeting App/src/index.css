@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+Display:ital,wght@0,400;0,700;0,900;1,700&display=swap');
+@import 'tailwindcss';
+
+/* ── Mobile app resets ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-x pan-y;
+}
+
+/* Smooth momentum scroll for the horizontal selector */
+.snap-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+@theme {
+  --font-sans: 'Be Vietnam Pro', sans-serif;
+  --font-serif: 'Noto Serif Display', serif;
+}
+
+/* ============ KEYFRAMES ============ */
+
+@keyframes petal-fall {
+  0%   { transform: translateY(-8vh) translateX(0) rotate(0deg);   opacity: 0.9; }
+  25%  { transform: translateY(25vh) translateX(25px) rotate(90deg); }
+  50%  { transform: translateY(52vh) translateX(-18px) rotate(200deg); }
+  75%  { transform: translateY(77vh) translateX(35px) rotate(310deg); }
+  100% { transform: translateY(108vh) translateX(5px) rotate(420deg); opacity: 0.15; }
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.1; transform: scale(0.8); }
+  100% { opacity: 1;   transform: scale(1.4); }
+}
+
+@keyframes title-glow {
+  0%, 100% { filter: drop-shadow(0 0 12px #FFD700) drop-shadow(0 0 30px #FF8C00); }
+  50%       { filter: drop-shadow(0 0 28px #FFD700) drop-shadow(0 0 60px #FF6B00) drop-shadow(0 0 90px #FFD70060); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes lantern-sway {
+  0%, 100% { transform: rotate(-9deg) translateX(0); }
+  50%       { transform: rotate(9deg) translateX(4px); }
+}
+
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.7), 0 4px 20px rgba(255,165,0,0.4); }
+  60%       { box-shadow: 0 0 0 14px rgba(255,215,0,0), 0 4px 20px rgba(255,165,0,0.4); }
+}
+
+@keyframes slide-up {
+  0%   { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes slide-up-delay {
+  0%, 30% { transform: translateY(40px); opacity: 0; }
+  100%     { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes scale-in {
+  0%   { transform: scale(0) rotate(-8deg); opacity: 0; }
+  70%  { transform: scale(1.08) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+@keyframes envelope-arrive {
+  0%   { transform: translateX(120%) rotate(15deg) scale(0.7); opacity: 0; }
+  60%  { transform: translateX(-4%) rotate(-2deg) scale(1.02); }
+  100% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
+}
+
+@keyframes money-fly-in {
+  0%   { transform: translateY(-60px) scaleY(1); opacity: 1; }
+  70%  { transform: translateY(10px) scaleY(0.7); opacity: 0.7; }
+  100% { transform: translateY(30px) scaleY(0.1); opacity: 0; }
+}
+
+@keyframes envelope-absorb {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.06) rotate(-2deg); }
+  70%  { transform: scale(0.97) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes progress-fill {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes shuffle-move {
+  0%   { transform: translate(0,0) rotate(0deg) scale(1); }
+  20%  { transform: translate(var(--sx1), var(--sy1)) rotate(var(--sr1)) scale(1.05); }
+  40%  { transform: translate(var(--sx2), var(--sy2)) rotate(var(--sr2)) scale(0.95); }
+  60%  { transform: translate(var(--sx3), var(--sy3)) rotate(var(--sr3)) scale(1.08); }
+  80%  { transform: translate(var(--sx1), calc(var(--sy1) * -0.5)) rotate(calc(var(--sr1) * -1)) scale(1); }
+  100% { transform: translate(0,0) rotate(0deg) scale(1); }
+}
+
+@keyframes deal-out {
+  0%   { transform: translate(0,0) rotate(0deg) scale(0.9); opacity: 0.5; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--dr)) scale(1); opacity: 1; }
+}
+
+@keyframes envelope-shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  15%  { transform: translateX(-6px) rotate(-4deg); }
+  30%  { transform: translateX(6px) rotate(4deg); }
+  45%  { transform: translateX(-5px) rotate(-3deg); }
+  60%  { transform: translateX(5px) rotate(3deg); }
+  75%  { transform: translateX(-3px) rotate(-2deg); }
+  90%  { transform: translateX(3px) rotate(2deg); }
+}
+
+@keyframes flap-open {
+  0%   { transform: perspective(500px) rotateX(0deg); }
+  100% { transform: perspective(500px) rotateX(-185deg); }
+}
+
+@keyframes money-emerge {
+  0%   { transform: translateY(80px) scaleY(0.3); opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: translateY(-40px) scaleY(1);  opacity: 1; }
+}
+
+@keyframes amount-pop {
+  0%   { transform: scale(0) rotate(-12deg); opacity: 0; }
+  55%  { transform: scale(1.22) rotate(4deg); opacity: 1; }
+  75%  { transform: scale(0.95) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes particle-burst {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+}
+
+@keyframes ring-burst {
+  0%   { transform: scale(0.2); opacity: 1; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+@keyframes confetti-drop {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(300px) rotate(var(--cr, 720deg)); opacity: 0; }
+}
+
+@keyframes flash-gold {
+  0%, 100% { background: rgba(255,215,0,0); }
+  50%       { background: rgba(255,215,0,0.15); }
+}
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50%       { transform: translateX(-8px); opacity: 0.6; }
+}
+
+/* ============ UTILITY CLASSES ============ */
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; }
+
+.perspective-800 { perspective: 800px; }
+
+.preserve-3d { transform-style: preserve-3d; }
