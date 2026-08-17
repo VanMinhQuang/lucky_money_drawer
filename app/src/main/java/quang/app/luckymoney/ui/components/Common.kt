@@ -10,11 +10,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
@@ -22,11 +22,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import quang.app.luckymoney.ui.theme.PrimaryButtonGradient
 import quang.app.luckymoney.ui.theme.TetGold
+import quang.app.luckymoney.ui.theme.TetMai
 import quang.app.luckymoney.ui.theme.TetPeach
 import quang.app.luckymoney.ui.theme.TetRed
 import kotlin.random.Random
 
 val AppEasing = CubicBezierEasing(0.22f, 1f, 0.36f, 1f)
+
+@Composable
+fun Modifier.shimmerEffect(): Modifier {
+    val infiniteTransition = rememberInfiniteTransition(label = "shimmer")
+    val xOffset by infiniteTransition.animateFloat(
+        initialValue = -2f,
+        targetValue = 2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1500, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "xOffset"
+    )
+
+    return this.drawWithCache {
+        val brush = Brush.linearGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.0f),
+                Color.White.copy(alpha = 0.3f),
+                Color.White.copy(alpha = 0.6f),
+                Color.White.copy(alpha = 0.3f),
+                Color.White.copy(alpha = 0.0f),
+            ),
+            start = Offset(xOffset * size.width, 0f),
+            end = Offset((xOffset + 1f) * size.width, size.height)
+        )
+        onDrawWithContent {
+            drawContent()
+            drawRect(brush = brush, blendMode = BlendMode.SrcAtop)
+        }
+    }
+}
 
 @Composable
 fun RadialGradientBackground(
@@ -40,7 +73,7 @@ fun RadialGradientBackground(
             .background(brush),
         contentAlignment = Alignment.Center
     ) {
-        FallingPeachBlossoms()
+        FallingBlossoms()
         
         // Background Decorations
         Lantern(Modifier.align(Alignment.TopStart).padding(horizontal = 24.dp, vertical = 32.dp))
@@ -158,7 +191,29 @@ fun Lantern(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun FallingBlossoms(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
+        FallingPeachBlossoms()
+        FallingApricotBlossoms()
+    }
+}
+
+@Composable
+fun FallingApricotBlossoms(modifier: Modifier = Modifier) {
+    FallingBlossomSystem(color = TetMai, modifier = modifier)
+}
+
+@Composable
 fun FallingPeachBlossoms(modifier: Modifier = Modifier) {
+    FallingBlossomSystem(color = TetPeach, modifier = modifier)
+}
+
+@Composable
+fun FallingBlossomSystem(
+    color: Color,
+    modifier: Modifier = Modifier,
+    petalCount: Int = 50
+) {
     val infiniteTransition = rememberInfiniteTransition(label = "petals")
     val time by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -170,7 +225,6 @@ fun FallingPeachBlossoms(modifier: Modifier = Modifier) {
         label = "time"
     )
 
-    val petalCount = 100
     val petals = remember {
         List(petalCount) {
             Petal(
@@ -203,7 +257,7 @@ fun FallingPeachBlossoms(modifier: Modifier = Modifier) {
                 rotate(petal.rotationSpeed * time + (yProgress * 360f))
             }) {
                 drawRoundRect(
-                    color = TetPeach.copy(alpha = petal.opacity),
+                    color = color.copy(alpha = petal.opacity),
                     size = Size(petal.size.dp.toPx(), (petal.size * 1.2f).dp.toPx()),
                     cornerRadius = CornerRadius(petal.size.dp.toPx() / 2)
                 )

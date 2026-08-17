@@ -14,20 +14,26 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
 import quang.app.luckymoney.ui.components.Envelope
 import quang.app.luckymoney.ui.components.RadialGradientBackground
 import quang.app.luckymoney.ui.theme.*
+import quang.app.luckymoney.utils.AudioManager
 import kotlin.random.Random
 
 @Composable
 fun ShuffleScreen(
     onShuffleComplete: () -> Unit
 ) {
-    val duration = 3000L
+    val context = LocalContext.current
+    val audioManager = remember { AudioManager.getInstance(context) }
     
     LaunchedEffect(Unit) {
-        delay(duration)
+        repeat(6) {
+            audioManager.playSfx("page_swipe")
+            delay(500)
+        }
         onShuffleComplete()
     }
 

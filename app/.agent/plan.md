@@ -1,26 +1,29 @@
 # Project Plan
 
-Refine the 'InteractiveEnvelope' layering: money should overlay the flap once open. Add a white starburst shining effect (matching the new image) to the reveal.
+A festive Vietnamese Tet themed Lucky Money (Lì Xì) app. Requirements: Welcome -> Setup -> Shuffle -> Selection -> Pull-to-reveal. High-quality animations, sounds, and haptics.
 
 ## Project Brief
 
-# Project Brief: Lucky Money - Interactive Reveal
+# Project Brief: Lucky Money (Lì Xì) - Ultra-Festive Edition
 
 ## Features
-* **Interactive Envelope Animation**: A smooth, state-driven animation representing the opening of an envelope flap.
-* **Depth-Correct Content Layering**: Visual logic ensuring the money stack overlays the opened flap to create a realistic "pop-out" effect.
-* **Radiant Starburst Effect**: A bright white shining effect with radiating rays that triggers specifically during the money reveal.
-* **Adaptive Layout Support**: A responsive design that ensures the envelope animation and layering are optimized for various screen sizes and form factors.
+1. **Interactive Setup & Shuffle**: Users create and configure lucky money envelopes, which are then randomized with smooth shuffle animations to hide the values.
+2. **Gesture-Based Pull-to-Reveal**: A tactile pull-up interaction to extract money from the envelope, featuring physics-based resistance and a celebratory reveal animation.
+3. **Ultra-Festive Ambient Effects**: A physics-based particle system simulating falling "Hoa Mai" (Yellow Apricot Blossom) petals that drift dynamically across the screen.
+4. **Immersive Sensory Feedback**: A synchronized audio-haptic experience featuring festive BGM, frictional dragging SFX, and vibration intensity that scales with the pulling gesture.
+5. **Adaptive Navigation Flow**: A seamless, state-driven transition from Welcome to Reveal screens, optimized for all device form factors.
 
 ## High-Level Technical Stack
-* **Kotlin**: Core language for application logic and state handling.
-* **Jetpack Compose**: Primary framework for building the UI and complex reveal animations.
-* **Jetpack Navigation 3**: State-driven navigation architecture for managing the reveal flow.
-* **Compose Material Adaptive**: Essential library for creating responsive layouts across mobile and foldable devices.
-* **Compose Animation & Graphics**: Utilized for the flap rotation layering and the starburst canvas effects.
+* **Language**: Kotlin
+* **UI Framework**: Jetpack Compose
+* **Navigation**: Jetpack Navigation 3 (State-driven)
+* **Layouts**: Compose Material Adaptive Library
+* **Concurrency**: Kotlin Coroutines (for physics-based animations and UI state management)
+* **Audio**: Jetpack Media3 (Low-latency sound effects and background festive music)
+* **Haptics**: Android HapticFeedback API (Dynamic vibration intensity control)
 
 ## Implementation Steps
-**Total Duration:** 2h 1m 9s
+**Total Duration:** 2h 37m 45s
 
 ### Task_1_Setup_and_Config: Setup project theme with TET festive colors (Red/Gold) and implement the Configuration screen to specify the number of lucky money envelopes.
 - **Status:** COMPLETED
@@ -163,7 +166,6 @@ Refine the 'InteractiveEnvelope' layering: money should overlay the flap once op
 
 ### Task_18_Layering_Refinement_and_White_Starburst: Refine the 'InteractiveEnvelope' layering so money overlays the flap once open. Add a radiant white starburst effect (matching the new image) to the reveal.
 - **Status:** COMPLETED
-- **Updates:** Refined InteractiveEnvelope layering using dynamic Z-ordering (Flap zIndex changes from 4f to 1f when open). Implemented WhiteShineBurst with 40 radiant rotating rays and sparkles. Updated MoneyRevealOverlay to use the new white starburst effect. Verified that money correctly overlays the flap and the visual style matches the reference.
 - **Acceptance Criteria:**
   - Money stack overlays the envelope flap once the flap is open (180-degree rotation).
   - Radiant white starburst effect with rotating rays implemented for the reveal.
@@ -172,11 +174,31 @@ Refine the 'InteractiveEnvelope' layering: money should overlay the flap once op
 - **Duration:** 5m 4s
 
 ### Task_19_Final_Run_and_Verify: Perform a final stability check and verify that the layering, starburst effect, and reveal animations align with the updated requirements.
-- **Status:** IN_PROGRESS
+- **Status:** COMPLETED
 - **Acceptance Criteria:**
   - Verify application stability (no crashes).
   - Confirm depth-correct content layering (money overlays the flap).
   - Confirm white starburst effect is active and radiant.
   - Make sure all existing tests pass, build pass and app does not crash.
-- **StartTime:** 2026-07-26 23:49:24 ICT
+
+### Task_20_Ambient_Effects_and_Haptics: Implement physics-based falling 'Hoa Mai' (Yellow Apricot Blossom) particle system and dynamic vibration intensity that scales with the pull-to-reveal gesture.
+- **Status:** COMPLETED
+- **Updates:** Implemented AudioManager for BGM and SFX. Added FallingApricotBlossoms (Hoa Mai) background effect. Integrated dynamic haptics in the pull-to-reveal gesture. Added shimmering animation to money bills during extraction. Updated SelectionScreen with page-swipe sound effects. Build is stable.
+- **Acceptance Criteria:**
+  - Yellow apricot blossoms drift dynamically across all screens.
+  - Haptic vibration intensity scales linearly with the pull-to-reveal drag distance.
+  - Festive BGM and dragging SFX integrated via Media3.
+  - The implemented UI must match the design provided in the project description.
+  - Build pass and app does not crash.
+- **Duration:** 23m 5s
+
+### Task_21_Final_Run_and_Verify: Final stability check, build verification, and alignment with the 'Ultra-Festive' requirements.
+- **Status:** COMPLETED
+- **Updates:** Final quality check passed for visuals, haptics, and stability. However, audio currently uses placeholders because raw assets were not provided. The app is ready for production pending the addition of actual .mp3 files by the user.
+- **Acceptance Criteria:**
+  - Verify application stability (no crashes).
+  - Confirm alignment with all user requirements including blossoms and sensory feedback.
+  - Make sure all existing tests pass.
+  - Build pass and app does not crash.
+- **Duration:** 13m 31s
 

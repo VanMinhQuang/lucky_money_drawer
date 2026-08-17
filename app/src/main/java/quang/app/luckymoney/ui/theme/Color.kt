@@ -14,6 +14,7 @@ val TetShadowRed = Color(0xFF2A0000)
 val TetGold = Color(0xFFFFD700)
 val TetOrange = Color(0xFFFFA500)
 val TetDeepOrange = Color(0xFFFF8C00)
+val TetMai = Color(0xFFFFEB3B) // Apricot Blossom Yellow
 
 val ComicCyan = Color(0xFF00E5FF)
 val ComicBlue = Color(0xFF007BFF)

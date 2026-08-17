@@ -1,5 +1,10 @@
 package quang.app.luckymoney.ui.components
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -13,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -26,6 +32,7 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -38,6 +45,7 @@ import com.airbnb.lottie.compose.*
 import kotlinx.coroutines.launch
 import quang.app.luckymoney.R
 import quang.app.luckymoney.ui.theme.*
+import quang.app.luckymoney.utils.AudioManager
 import quang.app.luckymoney.utils.MoneyUtils
 import kotlin.math.roundToInt
 
@@ -51,10 +59,22 @@ fun InteractiveEnvelope(
     onOpen: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val haptic = LocalHapticFeedback.current
+    val audioManager = remember { AudioManager.getInstance(context) }
     val scope = rememberCoroutineScope()
     val density = LocalDensity.current
     val textMeasurer = rememberTextMeasurer()
+
+    val vibrator = remember {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+    }
 
     // Envelope dimensions
     val envelopeWidth = 240.dp
@@ -114,6 +134,7 @@ fun InteractiveEnvelope(
                             scope.launch {
                                 val thresholdPx = -heightPx * revealThreshold
                                 if (moneyOffsetY.value <= thresholdPx) {
+                                    audioManager.playSfx("success")
                                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                     onOpen()
                                     moneyOffsetY.animateTo(
@@ -130,6 +151,22 @@ fun InteractiveEnvelope(
                             scope.launch {
                                 val newOffset = (moneyOffsetY.value + dragAmount).coerceIn(maxOffset, hideOffset)
                                 moneyOffsetY.snapTo(newOffset)
+                                
+                                // Dynamic Haptics and Sound
+                                val progress = (hideOffset - newOffset) / (hideOffset - maxOffset)
+                                if (progress > 0.1f) {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        val intensity = (progress * 255).toInt().coerceIn(1, 255)
+                                        vibrator.vibrate(VibrationEffect.createOneShot(10, intensity))
+                                    } else {
+                                        @Suppress("DEPRECATION")
+                                        vibrator.vibrate(10)
+                                    }
+                                }
+                                
+                                if (dragAmount < -2f) {
+                                    audioManager.playSfx("pull")
+                                }
                             }
                         }
                     )
@@ -313,6 +350,7 @@ fun MoneyBillPeek(amount: Long) {
             .height(85.dp)
             .clip(RoundedCornerShape(6.dp))
             .background(Color.White)
+            .shimmerEffect()
             .graphicsLayer { shadowElevation = 6f },
         contentScale = ContentScale.FillWidth
     )

@@ -19,9 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import quang.app.luckymoney.R
 import quang.app.luckymoney.ui.components.*
 import quang.app.luckymoney.ui.theme.*
+import quang.app.luckymoney.utils.AudioManager
 import kotlin.math.absoluteValue
 
 @Composable
@@ -34,10 +36,28 @@ fun SelectionScreen(
     onReveal: (Int) -> Unit,
     onReset: () -> Unit
 ) {
+    val context = LocalContext.current
+    val audioManager = remember { AudioManager.getInstance(context) }
     val pagerState = rememberPagerState(pageCount = { envelopeCount })
+    var lastPage by remember { mutableIntStateOf(0) }
     val allOpened = openedIndices.size == envelopeCount
     var flappedIndices by remember { mutableStateOf(setOf<Int>()) }
     var dismissedPages by remember { mutableStateOf(setOf<Int>()) }
+
+    DisposableEffect(Unit) {
+        audioManager.startBgm()
+        onDispose {
+            // Keep BGM playing if we're just moving between screens? 
+            // Usually yes for a small app, but let's be explicit if requested.
+        }
+    }
+
+    LaunchedEffect(pagerState.currentPage) {
+        if (pagerState.currentPage != lastPage) {
+            audioManager.playSfx("pop")
+            lastPage = pagerState.currentPage
+        }
+    }
 
     // Derive revealed page: if current page is fully revealed and not dismissed, show it.
     // This makes it "permanent" in the sense that it persists in state.
@@ -91,7 +111,10 @@ fun SelectionScreen(
                         amount = shuffledAmounts.getOrNull(page) ?: 0L,
                         isOpened = isOpened,
                         isFlapOpen = flappedIndices.contains(page) || isOpened,
-                        onFlapOpen = { flappedIndices = flappedIndices + page },
+                        onFlapOpen = { 
+                            audioManager.playSfx("flap_open")
+                            flappedIndices = flappedIndices + page 
+                        },
                         onOpen = {
                             onOpen(page)
                             onReveal(page)

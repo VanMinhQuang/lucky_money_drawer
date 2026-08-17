@@ -22,15 +22,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import quang.app.luckymoney.ui.components.CapsuleButton
 import quang.app.luckymoney.ui.components.Lantern
 import quang.app.luckymoney.ui.components.RadialGradientBackground
 import quang.app.luckymoney.ui.theme.*
+import quang.app.luckymoney.utils.AudioManager
 
 @Composable
 fun WelcomeScreen(
     onStartClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val audioManager = remember { AudioManager.getInstance(context) }
+
+    LaunchedEffect(Unit) {
+        audioManager.startBgm()
+    }
+
     RadialGradientBackground(
         brush = WelcomeBackground
     ) {

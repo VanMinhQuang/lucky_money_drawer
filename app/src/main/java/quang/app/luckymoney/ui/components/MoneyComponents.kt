@@ -301,6 +301,7 @@ fun MoneyBillFan(
                     .rotate(rotation)
                     .clip(RoundedCornerShape(4.dp))
                     .background(Color.White)
+                    .shimmerEffect()
                     .border(1.dp, Color.Black.copy(alpha = 0.1f), RoundedCornerShape(4.dp))
                     .graphicsLayer {
                         shadowElevation = 4f
