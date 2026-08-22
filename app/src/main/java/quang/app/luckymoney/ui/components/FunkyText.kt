@@ -81,7 +81,7 @@ fun FunkyText(
                         text = char.toString(),
                         textAlign = TextAlign.Center,
                         style = TextStyle(
-                            color = ComicPurple,
+                            color = TetDeepRed,
                             fontFamily = NotoSerifDisplay,
                             fontWeight = FontWeight.Black,
                             fontSize = fontSize,
@@ -97,9 +97,7 @@ fun FunkyText(
                     text = char.toString(),
                     textAlign = TextAlign.Center,
                     style = TextStyle(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(ComicCyan, ComicBlue)
-                        ),
+                        brush = GoldTextGradient,
                         fontFamily = NotoSerifDisplay,
                         fontWeight = FontWeight.Black,
                         fontSize = fontSize
@@ -172,9 +170,9 @@ fun ShineBurst(
                     path = path,
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            Color.White.copy(alpha = 0.8f), 
-                            Color.White.copy(alpha = 0.4f), 
-                            Color.White.copy(alpha = 0.1f),
+                            TetGold.copy(alpha = 0.8f), 
+                            TetMai.copy(alpha = 0.4f), 
+                            TetGold.copy(alpha = 0.1f),
                             Color.Transparent
                         ),
                         center = center,

@@ -17,12 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
+import com.example.lixitet.ui.WelcomeScreen
 import quang.app.luckymoney.ui.navigation.NavRoute
 import quang.app.luckymoney.ui.screens.SelectionScreen
 import quang.app.luckymoney.ui.screens.SetupAmountScreen
 import quang.app.luckymoney.ui.screens.SetupCountScreen
 import quang.app.luckymoney.ui.screens.ShuffleScreen
-import quang.app.luckymoney.ui.screens.WelcomeScreen
 import quang.app.luckymoney.ui.theme.LuckyMoneyTheme
 import quang.app.luckymoney.ui.viewmodel.MainViewModel
 

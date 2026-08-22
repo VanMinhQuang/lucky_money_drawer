@@ -142,8 +142,8 @@ fun ShiningMoneyIcon(
                         path = path,
                         brush = Brush.radialGradient(
                             colors = listOf(
-                                Color.White.copy(alpha = 0.7f),
-                                Color.White.copy(alpha = 0.1f),
+                                TetGold.copy(alpha = 0.8f),
+                                TetGold.copy(alpha = 0.2f),
                                 Color.Transparent
                             ),
                             center = center,
@@ -173,9 +173,9 @@ fun ShiningMoneyIcon(
                 center = center
             )
             
-            // Border - Very light silver
+            // Border - Premium Gold
             drawRoundRect(
-                color = Color(0xFFE0E0E0),
+                color = TetGold,
                 cornerRadius = CornerRadius(8.dp.toPx()),
                 size = size,
                 style = Stroke(width = 2.dp.toPx())

@@ -1,0 +1,90 @@
+<!--
+  Bản vector tĩnh (không animation, không gradient - Android Vector
+  Drawable trước API 24 hỗ trợ gradient hạn chế) của phong bao lì xì,
+  chuyển trực tiếp từ SVG gốc (viewBox 0 0 240 280).
+
+  Dùng khi cần MỘT ẢNH TĨNH (icon, thumbnail, ảnh chia sẻ...).
+  Để có đầy đủ animation (float, wiggle, coin-burst, shine sweep) như
+  bản HTML gốc, hãy dùng EnvelopeCanvas() trong
+  LiXiTetWelcomeScreen.kt (vẽ bằng Compose Canvas, có animation đầy đủ).
+
+  Đặt file này vào: app/src/main/res/drawable/ic_li_xi_envelope.xml
+  Dùng trong Compose:  painterResource(R.drawable.ic_li_xi_envelope)
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="280dp"
+    android:viewportWidth="240"
+    android:viewportHeight="280">
+
+    <!-- back envelope peeking out (2 lớp) -->
+    <path
+        android:pathData="M34,62 L202,62 L202,226 L34,226 Z"
+        android:fillColor="#5C0C10"
+        android:fillAlpha="0.55" />
+    <path
+        android:pathData="M42,58 L198,58 L198,232 L42,232 Z"
+        android:fillColor="#8E181D"
+        android:fillAlpha="0.6" />
+
+    <!-- main envelope body -->
+    <path
+        android:pathData="M22,54 L218,54 L218,238 L22,238 Z"
+        android:fillColor="#C1272D"
+        android:strokeColor="#E8B84B"
+        android:strokeWidth="3" />
+
+    <!-- inner outline -->
+    <path
+        android:pathData="M30,62 L210,62 L210,230 L30,230 Z"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFE9A8"
+        android:strokeAlpha="0.25"
+        android:strokeWidth="1.5" />
+
+    <!-- flap -->
+    <path
+        android:pathData="M22,70 Q120,150 218,70 L218,60 Q218,55 213,55 L27,55 Q22,55 22,60 Z"
+        android:fillColor="#A81E24"
+        android:strokeColor="#E8B84B"
+        android:strokeWidth="2.5" />
+
+    <!-- seal: ancient coin motif -->
+    <path
+        android:pathData="M120,112 a38,38 0 1,1 -0.1,0 Z"
+        android:fillColor="#E8B84B"
+        android:strokeColor="#8E181D"
+        android:strokeWidth="2.5" />
+    <path
+        android:pathData="M120,122 a28,28 0 1,1 -0.1,0 Z"
+        android:fillColor="#C1272D" />
+    <path
+        android:pathData="M120,141 L129,150 L120,159 L111,150 Z"
+        android:fillColor="#E8B84B" />
+    <path android:pathData="M118.5,126 h3 v3 h-3 Z" android:fillColor="#FFE9A8" />
+    <path android:pathData="M118.5,174 h3 v3 h-3 Z" android:fillColor="#FFE9A8" />
+    <path android:pathData="M94.5,148.5 h3 v3 h-3 Z" android:fillColor="#FFE9A8" />
+    <path android:pathData="M142.5,148.5 h3 v3 h-3 Z" android:fillColor="#FFE9A8" />
+
+    <!-- mai blossom flourish, large -->
+    <path
+        android:pathData="M52,196 m-4.5,0 a4.5,4.5 0 1,0 9,0 a4.5,4.5 0 1,0 -9,0 Z
+                           M59,194 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z
+                           M56,204 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z
+                           M45,194 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z
+                           M48,204 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"
+        android:fillColor="#FFCF3F"
+        android:fillAlpha="0.9" />
+    <path android:pathData="M52,196 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z" android:fillColor="#B9852A" />
+
+    <!-- mai blossom flourish, small -->
+    <path
+        android:pathData="M190,204 m-3.4,0 a3.4,3.4 0 1,0 6.8,0 a3.4,3.4 0 1,0 -6.8,0 Z
+                           M195.2,202.5 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z
+                           M193,210 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z
+                           M184.7,202.5 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z
+                           M187,210 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z"
+        android:fillColor="#FFCF3F"
+        android:fillAlpha="0.85" />
+    <path android:pathData="M190,204 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z" android:fillColor="#B9852A" />
+</vector>

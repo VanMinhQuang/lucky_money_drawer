@@ -6,10 +6,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -21,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import quang.app.luckymoney.ui.theme.PrimaryButtonGradient
+import quang.app.luckymoney.ui.theme.TetButtonText
 import quang.app.luckymoney.ui.theme.TetGold
 import quang.app.luckymoney.ui.theme.TetMai
 import quang.app.luckymoney.ui.theme.TetPeach
@@ -80,6 +84,106 @@ fun RadialGradientBackground(
         Lantern(Modifier.align(Alignment.TopEnd).padding(horizontal = 24.dp, vertical = 32.dp))
         
         content()
+    }
+}
+
+@Composable
+fun AppButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+    enabled: Boolean = true
+) {
+    // Pulsing glow animation (inspired by WelcomeScreen design)
+    val infiniteTransition = rememberInfiniteTransition(label = "AppButtonGlow")
+    val pulseAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.5f,
+        targetValue = 0.85f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2200, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "PulseAlpha"
+    )
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth(0.88f)
+            .heightIn(min = 58.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        // Outer Glow Layer
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .graphicsLayer {
+                    alpha = pulseAlpha
+                    scaleX = 1.06f
+                    scaleY = 1.3f
+                }
+                .background(
+                    brush = Brush.radialGradient(
+                        colors = listOf(TetGold.copy(alpha = 0.6f), Color.Transparent)
+                    ),
+                    shape = RoundedCornerShape(999.dp)
+                )
+        )
+
+        // The Main Button Container
+        Surface(
+            onClick = onClick,
+            enabled = enabled && !isLoading,
+            shape = RoundedCornerShape(999.dp),
+            color = Color.Transparent,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(999.dp))
+                .background(PrimaryButtonGradient)
+                .shimmerEffect()
+                .border(1.5.dp, TetGold.copy(alpha = 0.5f), RoundedCornerShape(999.dp))
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp,
+                        color = TetButtonText
+                    )
+                    Spacer(Modifier.width(12.dp))
+                    Text(
+                        text = "ĐANG XỬ LÝ...",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = TetButtonText,
+                            fontWeight = FontWeight.Black,
+                            letterSpacing = 1.2.sp
+                        )
+                    )
+                } else {
+                    Text(
+                        text = text.uppercase(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = TetButtonText,
+                            fontWeight = FontWeight.Black,
+                            letterSpacing = 1.2.sp
+                        )
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = null,
+                        tint = TetButtonText,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+        }
     }
 }
 

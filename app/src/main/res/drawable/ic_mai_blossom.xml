@@ -1,0 +1,31 @@
+<!--
+  Bản vector tĩnh của 1 cánh hoa mai rơi (petal), chuyển từ SVG inline
+  trong <script> của bản gốc (viewBox 0 0 20 20).
+  Dùng làm ảnh tĩnh; bản có animation rơi + đung đưa nằm trong
+  FallingPetals()/PetalView() của LiXiTetWelcomeScreen.kt.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+
+    <path
+        android:pathData="M10,4 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"
+        android:fillColor="#FFCF3F" />
+    <path
+        android:pathData="M16.3,7.5 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"
+        android:fillColor="#FFCF3F" />
+    <path
+        android:pathData="M14,14.5 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"
+        android:fillColor="#FFCF3F" />
+    <path
+        android:pathData="M6,14.5 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"
+        android:fillColor="#FFCF3F" />
+    <path
+        android:pathData="M3.7,7.5 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"
+        android:fillColor="#FFCF3F" />
+    <path
+        android:pathData="M10,10 m-2.4,0 a2.4,2.4 0 1,0 4.8,0 a2.4,2.4 0 1,0 -4.8,0 Z"
+        android:fillColor="#B9852A" />
+</vector>
